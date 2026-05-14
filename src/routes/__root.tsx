@@ -9,6 +9,9 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -72,11 +75,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Workplace AI — AI Productivity Assistant" },
+      { name: "description", content: "AI-powered email, meetings, tasks, research and chat for professionals." },
+      { name: "author", content: "Workplace AI" },
+      { property: "og:title", content: "Workplace AI — AI Productivity Assistant" },
+      { property: "og:description", content: "Automate daily work tasks with AI: emails, meeting summaries, planning, research, and chat." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -113,7 +116,21 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <SidebarProvider>
+        <div className="flex min-h-screen w-full bg-gradient-subtle">
+          <AppSidebar />
+          <div className="flex flex-1 flex-col">
+            <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur">
+              <SidebarTrigger />
+              <div className="text-sm font-medium text-muted-foreground">Workplace AI</div>
+            </header>
+            <main className="flex-1">
+              <Outlet />
+            </main>
+          </div>
+        </div>
+        <Toaster />
+      </SidebarProvider>
     </QueryClientProvider>
   );
 }
