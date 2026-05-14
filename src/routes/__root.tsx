@@ -120,9 +120,11 @@ function RootComponent() {
         <div className="flex min-h-screen w-full bg-gradient-subtle">
           <AppSidebar />
           <div className="flex flex-1 flex-col">
-            <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur">
-              <SidebarTrigger />
-              <div className="text-sm font-medium text-muted-foreground">Workplace AI</div>
+            <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b-2 border-primary/20 bg-background px-4 shadow-sm">
+              <SidebarTrigger className="text-foreground hover:text-primary" />
+              <div className="text-sm font-semibold text-foreground">
+                Workplace <span className="text-primary">AI</span>
+              </div>
             </header>
             <main className="flex-1">
               <Outlet />
