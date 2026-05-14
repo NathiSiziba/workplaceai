@@ -35,10 +35,26 @@ function Dashboard() {
         </div>
       </div>
 
+      <div className="mb-8 grid gap-4 sm:grid-cols-3">
+        {[
+          { label: "Tools available", value: "5" },
+          { label: "Avg. response", value: "<3s" },
+          { label: "Human review", value: "Always" },
+        ].map((s) => (
+          <div
+            key={s.label}
+            className="rounded-xl bg-gradient-primary p-5 text-primary-foreground shadow-elegant"
+          >
+            <div className="text-xs uppercase tracking-wider opacity-80">{s.label}</div>
+            <div className="mt-1 font-display text-2xl font-semibold">{s.value}</div>
+          </div>
+        ))}
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {features.map((f) => (
           <Link key={f.to} to={f.to} className="group">
-            <Card className="h-full border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-elegant">
+            <Card className="h-full border-l-4 border-l-primary bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-elegant">
               <CardHeader>
                 <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-accent-foreground">
                   <f.icon className="h-5 w-5" />
