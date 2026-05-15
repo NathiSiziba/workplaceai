@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Mail, FileText, ListTodo, Search, MessageSquare, Sparkles } from "lucide-react";
+import { LayoutDashboard, Mail, FileText, ListTodo, Search, MessageSquare, Zap } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
