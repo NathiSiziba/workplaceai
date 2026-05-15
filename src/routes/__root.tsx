@@ -130,6 +130,24 @@ function RootComponent() {
                 Workplace <span className="text-primary">AI</span>
               </div>
             </header>
+            <div className="relative h-9 overflow-hidden bg-primary">
+              <div className="animate-marquee flex whitespace-nowrap items-center h-full">
+                <span className="mx-4 text-xs font-medium text-primary-foreground">⚡ AI-powered productivity — now smarter than ever</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">✅ Smart Email Generator</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">📋 Meeting Summarizer</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">🗓️ AI Task Planner</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">🔍 Research Assistant</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">💬 AI Chatbot</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">🚀 Built for modern professionals</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">⚡ AI-powered productivity — now smarter than ever</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">✅ Smart Email Generator</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">📋 Meeting Summarizer</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">🗓️ AI Task Planner</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">🔍 Research Assistant</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">💬 AI Chatbot</span>
+                <span className="mx-4 text-xs font-medium text-primary-foreground">🚀 Built for modern professionals</span>
+              </div>
+            </div>
             <main className="flex-1">
               <Outlet />
             </main>
