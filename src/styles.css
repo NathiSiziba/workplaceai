@@ -133,5 +133,11 @@
   .bg-gradient-primary { background-image: var(--gradient-primary); }
   .bg-gradient-subtle { background-image: var(--gradient-subtle); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
-  .shadow-card { box-shadow: var(--shadow-card); }
+.shadow-card { box-shadow: var(--shadow-card); }
+  .animate-marquee { animation: marquee 30s linear infinite; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
