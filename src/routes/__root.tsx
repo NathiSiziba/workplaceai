@@ -12,6 +12,10 @@ import appCss from "../styles.css?url";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthGate } from "@/components/AuthGate";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { LogOut } from "lucide-react";
 
 function NotFoundComponent() {
   return (
@@ -120,23 +124,34 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full bg-gradient-subtle">
-          <AppSidebar />
-          <div className="flex flex-1 flex-col">
-            <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b-2 border-primary/20 bg-background px-4 shadow-sm">
-              <SidebarTrigger className="text-foreground hover:text-primary" />
-              <div className="text-sm font-semibold text-foreground">
-                Workplace <span className="text-primary">AI</span>
-              </div>
-            </header>
-            <main className="flex-1">
-              <Outlet />
-            </main>
+      <AuthGate>
+        <SidebarProvider>
+          <div className="flex min-h-screen w-full bg-gradient-subtle">
+            <AppSidebar />
+            <div className="flex flex-1 flex-col">
+              <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b-2 border-primary/20 bg-background px-4 shadow-sm">
+                <SidebarTrigger className="text-foreground hover:text-primary" />
+                <div className="text-sm font-semibold text-foreground">
+                  Workplace <span className="text-primary">AI</span>
+                </div>
+                <div className="ml-auto">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => supabase.auth.signOut()}
+                  >
+                    <LogOut className="mr-1.5 h-4 w-4" /> Sign out
+                  </Button>
+                </div>
+              </header>
+              <main className="flex-1">
+                <Outlet />
+              </main>
+            </div>
           </div>
-        </div>
-        <Toaster />
-      </SidebarProvider>
+        </SidebarProvider>
+      </AuthGate>
+      <Toaster />
     </QueryClientProvider>
   );
 }
