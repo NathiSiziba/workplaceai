@@ -79,23 +79,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Workplace AI — AI Productivity Assistant" },
-      { name: "description", content: "AI-powered email, meetings, tasks, research and chat for professionals." },
-      { name: "author", content: "Workplace AI" },
-      { property: "og:title", content: "Workplace AI — AI Productivity Assistant" },
-      { property: "og:description", content: "AI-powered email, meetings, tasks, research and chat for professionals." },
+      { title: "O.S.I.R.A. — Afro-futurist AI Operating System" },
+      { name: "description", content: "Multi-agent AI employees, knowledge vault, workflow automation, voice and analytics — built for African enterprise." },
+      { name: "author", content: "O.S.I.R.A." },
+      { name: "theme-color", content: "#0a1614" },
+      { property: "og:title", content: "O.S.I.R.A. — Afro-futurist AI Operating System" },
+      { property: "og:description", content: "Multi-agent AI employees, knowledge vault, workflow automation, voice and analytics — built for African enterprise." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Workplace AI — AI Productivity Assistant" },
-      { name: "twitter:description", content: "AI-powered email, meetings, tasks, research and chat for professionals." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5afd6921-deb6-4baa-b80d-9c79dd79a2d2/id-preview-b798dcf1--1451733d-58a9-4222-b5c2-b792bcff0a9a.lovable.app-1778751050862.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5afd6921-deb6-4baa-b80d-9c79dd79a2d2/id-preview-b798dcf1--1451733d-58a9-4222-b5c2-b792bcff0a9a.lovable.app-1778751050862.png" },
+      { name: "twitter:title", content: "O.S.I.R.A. — Afro-futurist AI OS" },
+      { name: "twitter:description", content: "Multi-agent AI employees, knowledge vault, workflow automation, voice and analytics for African enterprise." },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" },
       { rel: "stylesheet", href: appCss },
     ],
   }),
@@ -119,6 +117,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+const MARQUEE = [
+  "⚡ O.S.I.R.A. v1 · Phase 1 shell live",
+  "🛡️ POPIA-aligned · data stays in-region",
+  "🤖 Multi-agent AI employees: Anubis · Ptah · Thoth · Bastet",
+  "📚 Knowledge Vault with semantic search — Phase 3",
+  "🚚 Logistics & construction templates",
+  "💬 WhatsApp + 💳 PayFast integrations — Phase 6",
+  "🌍 Built for African enterprise",
+];
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -126,24 +134,40 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthGate>
         <SidebarProvider>
-          <div className="flex min-h-screen w-full bg-gradient-subtle">
+          <div className="flex min-h-screen w-full">
             <AppSidebar />
             <div className="flex flex-1 flex-col">
-              <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b-2 border-primary/20 bg-background px-4 shadow-sm">
-                <SidebarTrigger className="text-foreground hover:text-primary" />
-                <div className="text-sm font-semibold text-foreground">
-                  Workplace <span className="text-primary">AI</span>
+              <header className="glass-strong sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-glass-border px-4">
+                <SidebarTrigger className="text-foreground hover:text-accent" />
+                <div className="font-display text-sm font-bold tracking-[0.2em] text-foreground">
+                  O.S.I.R.A.
                 </div>
+                <span className="hidden text-[10px] uppercase tracking-[0.18em] text-muted-foreground sm:inline">
+                  · Operating System for Intelligent Resource Automation
+                </span>
                 <div className="ml-auto">
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="text-muted-foreground hover:text-foreground"
                     onClick={() => supabase.auth.signOut()}
                   >
                     <LogOut className="mr-1.5 h-4 w-4" /> Sign out
                   </Button>
                 </div>
               </header>
+
+              {/* Marquee announcement bar */}
+              <div className="relative h-9 overflow-hidden border-b border-glass-border bg-gradient-primary">
+                <div className="animate-marquee flex h-full items-center whitespace-nowrap text-xs font-medium text-primary-foreground">
+                  {[...MARQUEE, ...MARQUEE].map((m, i) => (
+                    <span key={i} className="mx-6 inline-flex items-center">
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               <main className="flex-1">
                 <Outlet />
               </main>
