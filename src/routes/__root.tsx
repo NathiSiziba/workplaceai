@@ -137,7 +137,7 @@ function RootComponent() {
           <div className="flex min-h-screen w-full">
             <AppSidebar />
             <div className="flex flex-1 flex-col">
-              <header className="glass-strong sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-glass-border px-4">
+              <header className="glass-strong sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-border px-4">
                 <SidebarTrigger className="text-foreground hover:text-accent" />
                 <div className="font-display text-sm font-bold tracking-[0.2em] text-foreground">
                   O.S.I.R.A.
@@ -158,7 +158,7 @@ function RootComponent() {
               </header>
 
               {/* Marquee announcement bar */}
-              <div className="relative h-9 overflow-hidden border-b border-glass-border bg-gradient-primary">
+              <div className="relative h-9 overflow-hidden border-b border-border bg-gradient-primary">
                 <div className="animate-marquee flex h-full items-center whitespace-nowrap text-xs font-medium text-primary-foreground">
                   {[...MARQUEE, ...MARQUEE].map((m, i) => (
                     <span key={i} className="mx-6 inline-flex items-center">
