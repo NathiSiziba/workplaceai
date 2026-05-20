@@ -9,39 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VoiceRouteImport } from './routes/voice'
-import { Route as VaultRouteImport } from './routes/vault'
 import { Route as TasksRouteImport } from './routes/tasks'
-import { Route as StudioRouteImport } from './routes/studio'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as MeetingsRouteImport } from './routes/meetings'
-import { Route as LogisticsRouteImport } from './routes/logistics'
 import { Route as EmailRouteImport } from './routes/email'
 import { Route as ChatRouteImport } from './routes/chat'
-import { Route as AnalyticsRouteImport } from './routes/analytics'
-import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SettingsIntegrationsRouteImport } from './routes/settings.integrations'
-import { Route as SettingsComplianceRouteImport } from './routes/settings.compliance'
 
-const VoiceRoute = VoiceRouteImport.update({
-  id: '/voice',
-  path: '/voice',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VaultRoute = VaultRouteImport.update({
-  id: '/vault',
-  path: '/vault',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudioRoute = StudioRouteImport.update({
-  id: '/studio',
-  path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResearchRoute = ResearchRouteImport.update({
@@ -54,11 +31,6 @@ const MeetingsRoute = MeetingsRouteImport.update({
   path: '/meetings',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LogisticsRoute = LogisticsRouteImport.update({
-  id: '/logistics',
-  path: '/logistics',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EmailRoute = EmailRouteImport.update({
   id: '/email',
   path: '/email',
@@ -69,177 +41,68 @@ const ChatRoute = ChatRouteImport.update({
   path: '/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AnalyticsRoute = AnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgentsRoute = AgentsRouteImport.update({
-  id: '/agents',
-  path: '/agents',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SettingsIntegrationsRoute = SettingsIntegrationsRouteImport.update({
-  id: '/settings/integrations',
-  path: '/settings/integrations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsComplianceRoute = SettingsComplianceRouteImport.update({
-  id: '/settings/compliance',
-  path: '/settings/compliance',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/agents': typeof AgentsRoute
-  '/analytics': typeof AnalyticsRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
-  '/logistics': typeof LogisticsRoute
   '/meetings': typeof MeetingsRoute
   '/research': typeof ResearchRoute
-  '/studio': typeof StudioRoute
   '/tasks': typeof TasksRoute
-  '/vault': typeof VaultRoute
-  '/voice': typeof VoiceRoute
-  '/settings/compliance': typeof SettingsComplianceRoute
-  '/settings/integrations': typeof SettingsIntegrationsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/agents': typeof AgentsRoute
-  '/analytics': typeof AnalyticsRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
-  '/logistics': typeof LogisticsRoute
   '/meetings': typeof MeetingsRoute
   '/research': typeof ResearchRoute
-  '/studio': typeof StudioRoute
   '/tasks': typeof TasksRoute
-  '/vault': typeof VaultRoute
-  '/voice': typeof VoiceRoute
-  '/settings/compliance': typeof SettingsComplianceRoute
-  '/settings/integrations': typeof SettingsIntegrationsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/agents': typeof AgentsRoute
-  '/analytics': typeof AnalyticsRoute
   '/chat': typeof ChatRoute
   '/email': typeof EmailRoute
-  '/logistics': typeof LogisticsRoute
   '/meetings': typeof MeetingsRoute
   '/research': typeof ResearchRoute
-  '/studio': typeof StudioRoute
   '/tasks': typeof TasksRoute
-  '/vault': typeof VaultRoute
-  '/voice': typeof VoiceRoute
-  '/settings/compliance': typeof SettingsComplianceRoute
-  '/settings/integrations': typeof SettingsIntegrationsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/agents'
-    | '/analytics'
-    | '/chat'
-    | '/email'
-    | '/logistics'
-    | '/meetings'
-    | '/research'
-    | '/studio'
-    | '/tasks'
-    | '/vault'
-    | '/voice'
-    | '/settings/compliance'
-    | '/settings/integrations'
+  fullPaths: '/' | '/chat' | '/email' | '/meetings' | '/research' | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/agents'
-    | '/analytics'
-    | '/chat'
-    | '/email'
-    | '/logistics'
-    | '/meetings'
-    | '/research'
-    | '/studio'
-    | '/tasks'
-    | '/vault'
-    | '/voice'
-    | '/settings/compliance'
-    | '/settings/integrations'
+  to: '/' | '/chat' | '/email' | '/meetings' | '/research' | '/tasks'
   id:
     | '__root__'
     | '/'
-    | '/agents'
-    | '/analytics'
     | '/chat'
     | '/email'
-    | '/logistics'
     | '/meetings'
     | '/research'
-    | '/studio'
     | '/tasks'
-    | '/vault'
-    | '/voice'
-    | '/settings/compliance'
-    | '/settings/integrations'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AgentsRoute: typeof AgentsRoute
-  AnalyticsRoute: typeof AnalyticsRoute
   ChatRoute: typeof ChatRoute
   EmailRoute: typeof EmailRoute
-  LogisticsRoute: typeof LogisticsRoute
   MeetingsRoute: typeof MeetingsRoute
   ResearchRoute: typeof ResearchRoute
-  StudioRoute: typeof StudioRoute
   TasksRoute: typeof TasksRoute
-  VaultRoute: typeof VaultRoute
-  VoiceRoute: typeof VoiceRoute
-  SettingsComplianceRoute: typeof SettingsComplianceRoute
-  SettingsIntegrationsRoute: typeof SettingsIntegrationsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/voice': {
-      id: '/voice'
-      path: '/voice'
-      fullPath: '/voice'
-      preLoaderRoute: typeof VoiceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/vault': {
-      id: '/vault'
-      path: '/vault'
-      fullPath: '/vault'
-      preLoaderRoute: typeof VaultRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/tasks': {
       id: '/tasks'
       path: '/tasks'
       fullPath: '/tasks'
       preLoaderRoute: typeof TasksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/studio': {
-      id: '/studio'
-      path: '/studio'
-      fullPath: '/studio'
-      preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/research': {
@@ -256,13 +119,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MeetingsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/logistics': {
-      id: '/logistics'
-      path: '/logistics'
-      fullPath: '/logistics'
-      preLoaderRoute: typeof LogisticsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/email': {
       id: '/email'
       path: '/email'
@@ -277,20 +133,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/analytics': {
-      id: '/analytics'
-      path: '/analytics'
-      fullPath: '/analytics'
-      preLoaderRoute: typeof AnalyticsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/agents': {
-      id: '/agents'
-      path: '/agents'
-      fullPath: '/agents'
-      preLoaderRoute: typeof AgentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -298,38 +140,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/settings/integrations': {
-      id: '/settings/integrations'
-      path: '/settings/integrations'
-      fullPath: '/settings/integrations'
-      preLoaderRoute: typeof SettingsIntegrationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/compliance': {
-      id: '/settings/compliance'
-      path: '/settings/compliance'
-      fullPath: '/settings/compliance'
-      preLoaderRoute: typeof SettingsComplianceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AgentsRoute: AgentsRoute,
-  AnalyticsRoute: AnalyticsRoute,
   ChatRoute: ChatRoute,
   EmailRoute: EmailRoute,
-  LogisticsRoute: LogisticsRoute,
   MeetingsRoute: MeetingsRoute,
   ResearchRoute: ResearchRoute,
-  StudioRoute: StudioRoute,
   TasksRoute: TasksRoute,
-  VaultRoute: VaultRoute,
-  VoiceRoute: VoiceRoute,
-  SettingsComplianceRoute: SettingsComplianceRoute,
-  SettingsIntegrationsRoute: SettingsIntegrationsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
