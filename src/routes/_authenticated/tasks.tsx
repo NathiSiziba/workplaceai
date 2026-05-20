@@ -11,7 +11,7 @@ import { AiOutput, Disclaimer } from "@/components/AiOutput";
 import { ListTodo, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/tasks")({
+export const Route = createFileRoute("/_authenticated/tasks")({
   head: () => ({ meta: [{ title: "AI Task Planner — Workplace AI" }] }),
   component: Page,
 });

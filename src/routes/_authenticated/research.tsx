@@ -11,7 +11,7 @@ import { AiOutput, Disclaimer } from "@/components/AiOutput";
 import { Search, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/research")({
+export const Route = createFileRoute("/_authenticated/research")({
   head: () => ({ meta: [{ title: "AI Research Assistant — Workplace AI" }] }),
   component: Page,
 });

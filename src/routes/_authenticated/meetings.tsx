@@ -9,7 +9,7 @@ import { AiOutput, Disclaimer } from "@/components/AiOutput";
 import { FileText, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/meetings")({
+export const Route = createFileRoute("/_authenticated/meetings")({
   head: () => ({ meta: [{ title: "Meeting Notes Summarizer — Workplace AI" }] }),
   component: Page,
 });

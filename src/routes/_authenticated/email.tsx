@@ -12,7 +12,7 @@ import { AiOutput, Disclaimer } from "@/components/AiOutput";
 import { Mail, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/email")({
+export const Route = createFileRoute("/_authenticated/email")({
   head: () => ({ meta: [{ title: "Smart Email Generator — Workplace AI" }] }),
   component: EmailPage,
 });

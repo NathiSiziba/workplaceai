@@ -9,7 +9,7 @@ import { MessageSquare, Send, Sparkles, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/chat")({
+export const Route = createFileRoute("/_authenticated/chat")({
   head: () => ({ meta: [{ title: "AI Chatbot — Workplace AI" }] }),
   component: Page,
 });
