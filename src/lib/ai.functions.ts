@@ -1,28 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 type Feature = "email" | "meeting" | "task" | "research" | "chat";
 
-const ALLOWED_MODELS = ["google/gemini-3-flash-preview"] as const;
-const DEFAULT_MODEL = "google/gemini-3-flash-preview";
-
-const MAX_MESSAGES = 50;
-const MAX_TOTAL_CHARS = 20000;
-
-const inputSchema = z.object({
-  feature: z.enum(["email", "meeting", "task", "research", "chat"]),
-  messages: z
-    .array(
-      z.object({
-        role: z.enum(["system", "user", "assistant"]),
-        content: z.string().min(1).max(MAX_TOTAL_CHARS),
-      }),
-    )
-    .min(1)
-    .max(MAX_MESSAGES),
-  model: z.enum(ALLOWED_MODELS).optional(),
-});
+interface ChatMsg {
+  role: "system" | "user" | "assistant";
+  content: string;
+}
 
 const SYSTEM_PROMPTS: Record<Feature, string> = {
   email: `You are an expert business communication assistant. Generate a professional email based on the user's request.
@@ -94,21 +77,17 @@ Be precise. If you are uncertain about a fact, mark it clearly with "(needs veri
 };
 
 export const runAi = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => inputSchema.parse(input))
+  .inputValidator(
+    (input: { feature: Feature; messages: ChatMsg[]; model?: string }) => input,
+  )
   .handler(async ({ data }) => {
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) {
       return { ok: false as const, error: "LOVABLE_API_KEY not configured" };
     }
 
-    const totalChars = data.messages.reduce((n, m) => n + m.content.length, 0);
-    if (totalChars > MAX_TOTAL_CHARS) {
-      return { ok: false as const, error: "Request too large." };
-    }
-
     const system = SYSTEM_PROMPTS[data.feature];
-    const model = data.model ?? DEFAULT_MODEL;
+    const model = data.model ?? "google/gemini-3-flash-preview";
 
     try {
       const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
