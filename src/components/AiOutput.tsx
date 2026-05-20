@@ -1,18 +1,26 @@
-import { Copy, Check, AlertCircle } from "lucide-react";
+import { Copy, Check, AlertCircle, Download, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export function AiOutput({ content, loading }: { content: string; loading?: boolean }) {
+export function AiOutput({
+  content,
+  loading,
+  onRegenerate,
+  filename = "workai-output.md",
+}: {
+  content: string;
+  loading?: boolean;
+  onRegenerate?: () => void;
+  filename?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   if (loading) {
     return (
       <div className="space-y-3">
-        <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
-        <div className="h-3 w-full animate-pulse rounded bg-muted" />
-        <div className="h-3 w-5/6 animate-pulse rounded bg-muted" />
-        <div className="h-3 w-2/3 animate-pulse rounded bg-muted" />
-        <div className="h-3 w-4/5 animate-pulse rounded bg-muted" />
+        {[3, 4, 5, 2, 4].map((w, i) => (
+          <div key={i} className="h-3 animate-pulse rounded bg-muted" style={{ width: `${50 + w * 10}%` }} />
+        ))}
       </div>
     );
   }
@@ -29,21 +37,44 @@ export function AiOutput({ content, loading }: { content: string; loading?: bool
   }
 
   return (
-    <div className="relative">
-      <Button
-        size="sm"
-        variant="ghost"
-        className="absolute right-0 top-0"
-        onClick={() => {
-          navigator.clipboard.writeText(content);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1500);
-        }}
-      >
-        {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-        <span className="ml-1.5 text-xs">{copied ? "Copied" : "Copy"}</span>
-      </Button>
-      <pre className="whitespace-pre-wrap break-words pr-20 font-sans text-sm leading-relaxed text-foreground">
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => {
+            navigator.clipboard.writeText(content);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+          }}
+        >
+          {copied ? <Check className="mr-1.5 h-3.5 w-3.5" /> : <Copy className="mr-1.5 h-3.5 w-3.5" />}
+          <span className="text-xs">{copied ? "Copied" : "Copy"}</span>
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => {
+            const blob = new Blob([content], { type: "text/markdown" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+          }}
+        >
+          <Download className="mr-1.5 h-3.5 w-3.5" />
+          <span className="text-xs">Download</span>
+        </Button>
+        {onRegenerate && (
+          <Button size="sm" variant="outline" onClick={onRegenerate}>
+            <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+            <span className="text-xs">Regenerate</span>
+          </Button>
+        )}
+      </div>
+      <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-foreground animate-in fade-in duration-300">
         {content}
       </pre>
     </div>

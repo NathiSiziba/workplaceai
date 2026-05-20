@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Mail, FileText, ListTodo, Search, MessageSquare, Sparkles } from "lucide-react";
+import { LayoutDashboard, Mail, FileText, ListTodo, Search, MessageSquare, Zap } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +20,7 @@ const items = [
   { title: "Task Planner", url: "/tasks", icon: ListTodo },
   { title: "Research", url: "/research", icon: Search },
   { title: "AI Chatbot", url: "/chat", icon: MessageSquare },
-];
+] as const;
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -29,13 +29,12 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
         <Link to="/" className="flex items-center gap-2 px-2 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-primary shadow-elegant">
-            <Sparkles className="h-4 w-4 text-primary-foreground" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary shadow-elegant">
+            <Zap className="h-4 w-4 text-primary-foreground" fill="currentColor" />
           </div>
-          <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-display text-sm font-semibold text-sidebar-foreground">Workplace AI</span>
-            <span className="text-[10px] text-muted-foreground">Productivity Suite</span>
-          </div>
+          <span className="font-display text-base font-bold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
+            Work<span className="text-primary">AI</span>
+          </span>
         </Link>
       </SidebarHeader>
       <SidebarContent>
