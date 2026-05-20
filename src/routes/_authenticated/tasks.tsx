@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { runAi } from "@/lib/ai.functions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -8,11 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AiOutput, Disclaimer } from "@/components/AiOutput";
+import { HistoryPanel } from "@/components/HistoryPanel";
 import { ListTodo, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/tasks")({
-  head: () => ({ meta: [{ title: "AI Task Planner — Workplace AI" }] }),
+  head: () => ({ meta: [{ title: "AI Task Planner — WorkAI" }] }),
   component: Page,
 });
 
@@ -23,20 +24,17 @@ function Page() {
   const [context, setContext] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(0);
 
-  async function plan() {
-    if (!tasks.trim()) {
-      toast.error("Add at least one task.");
-      return;
-    }
-    setLoading(true);
-    setOutput("");
+  const plan = useCallback(async () => {
+    if (!tasks.trim()) { toast.error("Add at least one task."); return; }
+    setLoading(true); setOutput("");
     const prompt = `Available hours today: ${hours}\nContext: ${context || "(none)"}\n\nTasks (one per line):\n${tasks}`;
-    const res = await run({ data: { feature: "task", messages: [{ role: "user", content: prompt }] } });
-    if (res.ok) setOutput(res.content);
+    const res = await run({ data: { feature: "task", messages: [{ role: "user", content: prompt }], title: tasks.split("\n")[0].slice(0, 60) } });
+    if (res.ok) { setOutput(res.content); setRefresh((r) => r + 1); }
     else toast.error(res.error);
     setLoading(false);
-  }
+  }, [run, tasks, hours, context]);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
@@ -51,37 +49,35 @@ function Page() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Your tasks</CardTitle>
-            <CardDescription>One task per line. Add deadlines if known.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <Label>Hours available</Label>
-                <Input type="number" min={1} max={16} value={hours} onChange={(e)=>setHours(e.target.value)} />
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Your tasks</CardTitle>
+              <CardDescription>One task per line. ⌘/Ctrl+Enter to plan.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4" onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") plan(); }}>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label>Hours available</Label>
+                  <Input type="number" min={1} max={16} value={hours} onChange={(e)=>setHours(e.target.value)} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Context (optional)</Label>
+                  <Input value={context} onChange={(e)=>setContext(e.target.value)} placeholder="e.g. low energy, 2pm meeting" />
+                </div>
               </div>
               <div className="space-y-1.5">
-                <Label>Context (optional)</Label>
-                <Input value={context} onChange={(e)=>setContext(e.target.value)} placeholder="e.g. low energy, 2pm meeting" />
+                <Label>Tasks</Label>
+                <Textarea rows={10} value={tasks} onChange={(e)=>setTasks(e.target.value)} placeholder={`Finish Q3 report — due tomorrow\nReview pull requests\nCall supplier\nPrep board deck`} />
               </div>
-            </div>
-            <div className="space-y-1.5">
-              <Label>Tasks</Label>
-              <Textarea
-                rows={10}
-                value={tasks}
-                onChange={(e)=>setTasks(e.target.value)}
-                placeholder={`Finish Q3 report — due tomorrow\nReview pull requests\nCall supplier\nPrep board deck`}
-              />
-            </div>
-            <Button onClick={plan} disabled={loading} className="w-full bg-gradient-primary text-primary-foreground shadow-elegant hover:opacity-95">
-              <Wand2 className="mr-2 h-4 w-4" />
-              {loading ? "Planning…" : "Plan my day"}
-            </Button>
-          </CardContent>
-        </Card>
+              <Button onClick={plan} disabled={loading} className="w-full bg-gradient-primary text-primary-foreground shadow-elegant hover:opacity-95">
+                <Wand2 className="mr-2 h-4 w-4" />
+                {loading ? "Planning…" : "Plan my day"}
+              </Button>
+            </CardContent>
+          </Card>
+          <HistoryPanel feature="task" refreshKey={refresh} onLoad={(it) => { setTasks(it.input.split("Tasks (one per line):\n").pop() || it.input); setOutput(it.output); }} />
+        </div>
 
         <Card>
           <CardHeader>
@@ -89,7 +85,7 @@ function Page() {
             <CardDescription>Schedule, focus block, and quick wins.</CardDescription>
           </CardHeader>
           <CardContent>
-            <AiOutput content={output} loading={loading} />
+            <AiOutput content={output} loading={loading} onRegenerate={plan} filename="task-plan.md" />
             <Disclaimer />
           </CardContent>
         </Card>
